@@ -13,15 +13,23 @@ provider:
   stage: ${opt:stage, 'dev'}
   environment:
     DB_URI: ${ssm:/sls-node-core-${self:custom.stage}/DB_URI}
+    JWT_SECRET: ${ssm:/sls-node-core-${self:custom.stage}/JWT_SECRET}
 
 functions:
   ping:
-    handler: dist/ping.handler
+    handler: dist/handlers/ping.handler
     timeout: 29
     events:
       - http:
           method: GET
           path: /ping
+  signup:
+    handler: dist/handlers/signup.handler
+    timeout: 29
+    events:
+      - http:
+          method: POST
+          path: /signup
 
 package:
   individually: true

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
-  "type": "module",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
@@ -20,11 +19,16 @@
     "@middy/http-json-body-parser": "2.5.7",
     "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1692.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.146",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.2",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
