@@ -8,8 +8,8 @@
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
     "build": "tsc",
-    "deploy": "tsc && sls deploy",
-    "deploy-debug": "tsc && sls deploy --debug",
+    "deploy": "tsc && sls deploy --stage prod",
+    "deploy-debug": "tsc && sls deploy --stage prod --debug",
     "invoke": "tsc && sls invoke local -f"
   },
   "keywords": [],
