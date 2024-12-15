@@ -10,7 +10,7 @@ provider:
   runtime: nodejs18.x
   region: us-east-1
   memorySize: 1024
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'prod'}
   environment:
     DB_URI: ${ssm:/sls-node-core-${self:custom.stage}/DB_URI}
 
