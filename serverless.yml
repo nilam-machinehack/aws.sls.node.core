@@ -17,14 +17,14 @@ provider:
 
 functions:
   ping:
-    handler: dist/handlers/ping.handler
+    handler: dist/handlers/index/ping.handler
     timeout: 29
     events:
       - http:
           method: GET
           path: /ping
   signup:
-    handler: dist/handlers/signup.handler
+    handler: dist/handlers/auth/signup.handler
     timeout: 29
     events:
       - http:

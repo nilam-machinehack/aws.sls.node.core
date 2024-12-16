@@ -1,9 +1,9 @@
 import middy from '@middy/core';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import { APIGatewayEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
-import { HttpStatusCodes } from '../utils/constants';
-import { IUser } from '../interfaces/auth/user';
-import { createUser } from '../service/auth/auth';
+import { HttpStatusCodes } from '../../utils/constants';
+import { IUser } from '../../interfaces/auth/user';
+import { createUser } from '../../service/auth/auth';
 
 /**
  * @description handler function to handle user signup
