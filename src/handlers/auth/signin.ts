@@ -4,7 +4,9 @@ import { APIGatewayEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { HttpStatusCodes } from '../../utils/constants';
 import { IUser } from '../../interfaces/auth/user';
 import { findUser } from '../../service/auth/auth';
-import { bcryptHelpers, jwtHelpers, sendResponse } from '../../utils/helpers';
+import { bcryptHelpers, jwtHelpers, sendResponse, validationCheck } from '../../utils/helpers';
+import { UserSigninDTO } from '../../dtos/auth';
+import { IValidationCheck } from '../../interfaces/misc/helper';
 
 /**
  * @description handler function to handle user signin
@@ -14,6 +16,10 @@ import { bcryptHelpers, jwtHelpers, sendResponse } from '../../utils/helpers';
  */
 const signIn = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
   try {
+    const validationResponse: IValidationCheck = await validationCheck(UserSigninDTO, event.body);
+
+    if (!validationResponse.validated) return sendResponse(HttpStatusCodes.BAD_REQUEST, { message: validationResponse.error });
+
     const userData: { email: string; password: string } = JSON.parse(JSON.stringify(event.body));
 
     const user: IUser = await findUser({ email: userData.email });

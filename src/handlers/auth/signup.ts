@@ -4,7 +4,9 @@ import { APIGatewayEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { HttpStatusCodes } from '../../utils/constants';
 import { IUser } from '../../interfaces/auth/user';
 import { createUser } from '../../service/auth/auth';
-import { sendResponse } from '../../utils/helpers';
+import { sendResponse, validationCheck } from '../../utils/helpers';
+import { IValidationCheck } from '../../interfaces/misc/helper';
+import { UserSignupDTO } from '../../dtos/auth';
 
 /**
  * @description handler function to handle user signup
@@ -14,6 +16,10 @@ import { sendResponse } from '../../utils/helpers';
  */
 const signUp = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
   try {
+    const validationResponse: IValidationCheck = await validationCheck(UserSignupDTO, event.body);
+
+    if (!validationResponse.validated) return sendResponse(HttpStatusCodes.BAD_REQUEST, { message: validationResponse.error });
+
     const userData: IUser = JSON.parse(JSON.stringify(event.body));
 
     await createUser(userData);
