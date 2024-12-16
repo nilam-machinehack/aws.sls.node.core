@@ -30,6 +30,13 @@ functions:
       - http:
           method: POST
           path: /signup
+  signin:
+    handler: dist/handlers/auth/signin.handler
+    timeout: 29
+    events:
+      - http:
+          method: POST
+          path: /signin
 
 package:
   individually: true
