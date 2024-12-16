@@ -4,6 +4,7 @@ import { APIGatewayEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { HttpStatusCodes } from '../../utils/constants';
 import { IUser } from '../../interfaces/auth/user';
 import { createUser } from '../../service/auth/auth';
+import { sendResponse } from '../../utils/helpers';
 
 /**
  * @description handler function to handle user signup
@@ -17,15 +18,14 @@ const signUp = async (event: APIGatewayEvent, context: Context): Promise<APIGate
 
     await createUser(userData);
 
-    return {
-      statusCode: HttpStatusCodes.OK,
-      body: JSON.stringify({ message: 'success', lambda: context.functionName, data: { name: userData.name, email: userData.email } }),
-    };
+    return sendResponse(HttpStatusCodes.CREATED, {
+      message: 'success',
+      lambda: context.functionName,
+      data: { name: userData.name, email: userData.email },
+    });
   } catch (error) {
-    return {
-      statusCode: HttpStatusCodes.INTERNAL_SERVER_ERROR,
-      body: JSON.stringify({ message: 'exception', error }),
-    };
+    if (error?.code === 11000) return sendResponse(HttpStatusCodes.CONFLICT, { message: 'user already exists' });
+    return sendResponse(HttpStatusCodes.INTERNAL_SERVER_ERROR, { message: 'exception', error });
   }
 };
 

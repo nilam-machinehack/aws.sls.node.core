@@ -26,3 +26,12 @@ export const jwtHelpers = {
   createToken: (payload: any, expiry: number = 3 * 24 * 60 * 60): string => jwt.sign(payload, JWT_SECRET, { expiresIn: expiry }),
   verifyToken: (token: string): jwt.JwtPayload | string => jwt.verify(token, JWT_SECRET),
 };
+
+/**
+ * @description helper method responsible for
+ * sending lambda response back to client
+ * @param {number} statusCode http status code
+ * @param {any} body body of the lambda response
+ * @returns the lambda response
+ */
+export const sendResponse = (statusCode: number, body: any) => ({ statusCode, body: JSON.stringify(body) });

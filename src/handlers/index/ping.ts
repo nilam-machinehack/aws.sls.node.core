@@ -2,6 +2,7 @@ import middy from '@middy/core';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import { APIGatewayEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { HttpStatusCodes } from '../../utils/constants';
+import { sendResponse } from '../../utils/helpers';
 
 /**
  * @description handler function for api health check
@@ -10,10 +11,7 @@ import { HttpStatusCodes } from '../../utils/constants';
  * lambda execution environment
  */
 const ping = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
-  return {
-    statusCode: HttpStatusCodes.OK,
-    body: JSON.stringify({ message: 'pong!', lambda: context.functionName, event }),
-  };
+  return sendResponse(HttpStatusCodes.OK, { message: 'pong!', lambda: context.functionName, event });
 };
 
 export const handler = middy(ping).use(httpJsonBodyParser());
