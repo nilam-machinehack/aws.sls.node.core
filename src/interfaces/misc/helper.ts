@@ -8,3 +8,8 @@ export interface IStatusCode {
   CONFLICT: number;
   INTERNAL_SERVER_ERROR: number;
 }
+
+export interface IValidationCheck {
+  validated: boolean;
+  error: any;
+}
