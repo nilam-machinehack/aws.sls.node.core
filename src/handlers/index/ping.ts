@@ -11,7 +11,7 @@ import { sendResponse } from '../../utils/helpers';
  * lambda execution environment
  */
 const ping = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
-  return sendResponse(HttpStatusCodes.OK, { message: 'pong!', lambda: context.functionName, event });
+  return sendResponse(HttpStatusCodes.OK, { message: 'pong!', lambda: context.functionName, stage: event?.requestContext?.stage || 'dev' });
 };
 
 export const handler = middy(ping).use(httpJsonBodyParser());
